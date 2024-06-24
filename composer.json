@@ -1,0 +1,19 @@
+{
+    "name": "ibroid/php-tts",
+    "description": "Convert text to speach using PHP",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ibroid\\PhpTts\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ibroid",
+            "email": "maulana858@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
