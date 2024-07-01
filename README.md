@@ -18,6 +18,74 @@ Google Translate can handle millions of requests, so you can use this library co
 
 ## Install
 
+#### Requirements
+
+- PHP >= 7.4
+
 ```console
-composer require ibroid/php-tts
+composer require ibroid/php-tts:dev-master
+```
+
+## Example
+
+```html
+<form onsubmit="sendText(event)" action="/index.php" method="post">
+  <input required type="text" name="text" placeholder="Type any words" />
+  <button>Play Audio</button>
+  <h2 id="indicator">Status : Waiting for request</h2>
+  <div id="output"></div>
+</form>
+```
+
+```javascript
+function sendText(event) {
+  event.preventDefault();
+  document.getElementById("indicator").innerText = "Status : Loading...";
+
+  const body = new FormData();
+  body.append("text", event.target.text.value);
+
+  fetch("/index.php", {
+    method: "POST",
+    body: body,
+  })
+    .then(async (response) => {
+      document.getElementById("indicator").innerText = "Status : Playing";
+
+      const audio = new Audio(
+        "data:audio/wav;base64," + (await response.text())
+      );
+
+      audio.addEventListener("ended", () => {
+        document.getElementById("indicator").innerText = "Status : Ended";
+      });
+
+      const audioElement = document.createElement("audio");
+      audioElement.src = audio.src;
+      audioElement.controls = true;
+      document.getElementById("output").append(audioElement);
+
+      audio.play();
+    })
+
+    .then((err) => {
+      document.getElementById("indicator").innerText = "Status : Error. " + err;
+    });
+}
+```
+
+```php
+include "./vendor/autoload.php";
+
+use Ibroid\PhpTts\Tts as Tts;
+
+if (isset($_POST['text'])) {
+  $audio = Tts::generateAudio($_POST['text'], [
+    "lang" => "en",
+    "timeout" => 5000
+  ]);
+
+  echo $audio;
+}
+
 ```
