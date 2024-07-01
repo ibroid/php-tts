@@ -14,8 +14,6 @@ Google Translate can handle millions of requests, so you can use this library co
 
 3. The base64-encoded audio data is then handed over to JavaScript, which decodes it into an audio format that can be played.
 
-> Please pay attention, for some reason maybe your ip will be blocked. but idk.
-
 ## Install
 
 #### Requirements
