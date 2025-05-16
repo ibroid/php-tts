@@ -66,7 +66,7 @@ function sendText(event) {
       audio.play();
     })
 
-    .then((err) => {
+    .catch((err) => {
       document.getElementById("indicator").innerText = "Status : Error. " + err;
     });
 }
